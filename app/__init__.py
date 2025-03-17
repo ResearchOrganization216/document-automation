@@ -26,14 +26,14 @@ def create_app():
     from app.routes.data_extraction.extract_driver_statememt_info import extract_bp_driver_statement
     from app.routes.data_extraction.extract_inspection_report import extract_bp_inspection_report
     #from app.routes.document_classification.document_classification import document_classification_bp
-    #from app.routes.document_classification.extract_document_classification import extract_bp_document_classification
+    from app.routes.document_classification.extract_document_classification import extract_bp_document_classification
 
 
     app.register_blueprint(extract_bp_claim_report, url_prefix='/api')
     app.register_blueprint(extract_bp_driver_statement, url_prefix='/api')
     app.register_blueprint(extract_bp_inspection_report, url_prefix='/api')
     #app.register_blueprint(document_classification_bp, url_prefix='/api') #new route for document classification using opencv
-    #app.register_blueprint(extract_bp_document_classification, url_prefix='/api') #new route for document classification using LLM
+    app.register_blueprint(extract_bp_document_classification, url_prefix='/api') #new route for document classification using LLM
 
 
     # Default route for '/'
