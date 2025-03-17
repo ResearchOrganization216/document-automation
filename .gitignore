@@ -1,0 +1,107 @@
+# Python bytecode
+*.pyc
+*.pyo
+__pycache__/
+
+# Environment variables
+.env
+
+# Virtual environment
+venv/
+env/
+
+# Flask cache files
+instance/
+*.sqlite3
+*.db
+
+# Pytest cache
+.cache/
+
+# Logs and debugging files
+*.log
+*.pid
+
+# System-specific files
+.DS_Store
+Thumbs.db
+
+# IDE/editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*.swn
+
+# Docker files
+*.pid
+docker-compose.override.yml
+
+# Compiled C extensions
+*.so
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Python egg files
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Coverage reports
+.coverage
+htmlcov/
+
+# mypy static analysis
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# pyenv
+.python-version
+
+# Poetry
+poetry.lock
+
+# Pylint reports
+pylint-report.txt
+
+# Test reports
+test-output/
+junit*.xml
+
+# Hugging Face Transformers cache
+*.bin
+*.h5
+*.pt
+transformers_cache/
+tokenizer_cache/
+
+# PyTorch/ML training checkpoints
+lightning_logs/
+checkpoints/
+runs/
+mlruns/
+*.ckpt
+*.pth
+
+# Flask-SQLAlchemy database files
+*.db
+*.sqlite
+
+# Flask instance folders
+instance/
+
+# Pipenv files
+Pipfile
+Pipfile.lock
+
+# Celery task queue files (if applicable)
+celerybeat-schedule
+celerybeat.pid
+
+# Temporary files
+tmp/
+temp/
+.data
