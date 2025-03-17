@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  flask-app:
+    build: .
+    ports:
+      - "5000:5000"
+    depends_on:
+      - in-db
+    environment:
+      FLASK_ENV: development
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+
+  in-db:
+    build:
+      context: .
+      dockerfile: Dockerfile.postgres  # Use the new PostgreSQL Dockerfile
+    container_name: in-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: in-password
+    volumes:
+      - ./db/.data:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
