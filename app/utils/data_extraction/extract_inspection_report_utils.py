@@ -14,7 +14,7 @@ def get_dynamic_prompt():
                 "name_and_address_of_person", "make", "year", "color", "type", "engine_no",
                 "chassis_no", "vehicle_gasoline", "paint", "body_work", "power_steering", "air_bags", 
                 "rim_embellisher", "auto_gear", "power_winker_mirror", "abs_brake", "alloy_wheel_rim", 
-                "4_wheel_driver", "power_shutter", "power_ariel", "spoiler", "modified_buffer", "single_dual_ac", 
+                "four_wheel_driver", "power_shutter", "power_ariel", "spoiler", "modified_buffer", "single_dual_ac", 
                 "navigation", "rear_wiper", "body_kit", "cassette", "fog_buffer_lamps", "hood_railing", "sun_roof", 
                 "cd_dvd", "reverse_camera", "remote_smart_key", "sun_door_wiser"
     ]

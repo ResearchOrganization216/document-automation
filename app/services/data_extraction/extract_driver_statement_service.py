@@ -40,7 +40,7 @@ json_schema = {
     "type": "object",
     "properties": {
         "vehicle_no": {"type": "string"},
-        "date_and_time": {"type": "string", "format": "date"},
+        "date_and_time": {"type": "string"},
         "accident_location": {"type": "string"},
         "driver_name": {"type": "string"},
         "driver_nic": {"type": "string"},
