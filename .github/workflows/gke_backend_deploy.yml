@@ -1,4 +1,4 @@
-name: "Build and Deploy Frontend to GKE"
+name: "Build and Deploy Backend to GKE"
 
 on:
   push:
@@ -9,14 +9,15 @@ env:
   PROJECT_ID: "${{ secrets.PROJECT_ID }}"
   GKE_CLUSTER: "${{ secrets.GKE_CLUSTER }}"
   GKE_ZONE: "${{ secrets.GKE_ZONE }}"
-  GKE_NAMESPACE: "${{ secrets.GKE_NAMESPACE }}"
+  GKE_NAMESPACE: "${{ secrets.GKE_NAMESPACE }}" # e.g., "default"
   GAR_REGION: "${{ secrets.GAR_REGION }}"
   GAR_NAME: "${{ secrets.GAR_NAME }}"
   GCR_SERVICE: "${{ secrets.GCR_SERVICE }}"
+  # Use a static tag, e.g., latest, if you don't want to include the commit SHA.
   IMAGE_TAG: "${{ secrets.GAR_REGION }}-docker.pkg.dev/${{ secrets.PROJECT_ID }}/${{ secrets.GAR_NAME }}/${{ secrets.GCR_SERVICE }}:latest"
 
 jobs:
-  deploy-fe:
+  deploy-backend:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -41,24 +42,26 @@ jobs:
         run: |
           gcloud auth configure-docker "${{ env.GAR_REGION }}-docker.pkg.dev"
 
-      - name: "Build and Push Frontend Image"
+      - name: "Build and Push Backend Image"
         run: |
-          docker build --tag "${{ env.IMAGE_TAG }}" .
+          docker build --tag "${{ env.IMAGE_TAG }}" -f Dockerfile .
           docker push "${{ env.IMAGE_TAG }}"
 
       - name: "Get GKE Credentials"
         run: |
           gcloud container clusters get-credentials ${{ env.GKE_CLUSTER }} --zone ${{ env.GKE_ZONE }} --project ${{ env.PROJECT_ID }}
 
-      - name: "Deploy Frontend to GKE"
+      - name: "Deploy Backend to GKE"
         run: |
-          kubectl apply -f kubernetes/frontend-deployment.yaml -n ${{ env.GKE_NAMESPACE }}
-          kubectl apply -f kubernetes/frontend-service.yaml -n ${{ env.GKE_NAMESPACE }}
+          # Replace the placeholder <BACKEND_IMAGE> in the deployment manifest with the actual image tag.
+          sed -i "s|<BACKEND_IMAGE>|${{ env.IMAGE_TAG }}|g" kubernetes/backend-deployment.yaml
+          kubectl apply -f kubernetes/backend-deployment.yaml -n ${{ env.GKE_NAMESPACE }}
+          kubectl apply -f kubernetes/backend-service.yaml -n ${{ env.GKE_NAMESPACE }}
 
-      - name: "Restart Frontend Deployment"
+      - name: "Restart Service Deployment"
         run: |
-          kubectl rollout restart deployment frontend -n ${{ env.GKE_NAMESPACE }}
+          kubectl rollout restart deployment customer-risk-prediction -n ${{ env.GKE_NAMESPACE }}
 
       - name: "Show Service Output"
         run: |
-          kubectl get svc frontend -n ${{ env.GKE_NAMESPACE }}
+          kubectl get svc customer-risk-prediction -n ${{ env.GKE_NAMESPACE }}
