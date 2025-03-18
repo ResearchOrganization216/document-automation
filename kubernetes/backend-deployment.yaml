@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: document-automation
+  labels:
+    app: document-automation
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: document-automation
+  template:
+    metadata:
+      labels:
+        app: document-automation
+    spec:
+      serviceAccountName: innoainsure-ksa
+      containers:
+        - name: backend
+          image: asia-southeast1-docker.pkg.dev/innoainsure-project/innoainsure-be/document-automation:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5009
+          env:
+            - name: PORT
+              value: "5009"
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "250m"
+              memory: "256Mi"
