@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: document-automation
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: document-automation
+  template:
+    metadata:
+      labels:
+        app: document-automation
+    spec:
+      containers:
+        - name: document-automation
+          image: asia-southeast1-docker.pkg.dev/innoainsure-project/innoainsure-be/document-automation:latest # Replace with your actual Docker image name
+          ports:
+            - containerPort: 5009
+          env:
+            - name: GOOGLE_API_KEY
+              value: "AIzaSyBMmmpByqYzJIaBfOZde7tRgISeLPtzrWs"
+            - name: GROQ_API_KEY
+              value: "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"
+            - name: OPENAI_API_KEY
+              value: "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"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: document-automation
+spec:
+  type: LoadBalancer
+  selector:
+    app: document-automation
+  ports:
+    - protocol: TCP
+      port: 5009 # External port
+      targetPort: 5009 # Container port
